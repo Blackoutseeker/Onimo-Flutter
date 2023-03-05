@@ -1,4 +1,4 @@
-package com.example.onimo
+package com.FelipsTudio.onimo
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -59,6 +59,12 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+        debug {
+            signingConfig signingConfigs.debug
+            dependencies {
+                implementation 'com.google.firebase:firebase-appcheck-debug:16.1.0'
+            }
+        }
     }
 }
 

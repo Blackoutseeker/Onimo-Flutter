@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 
-import 'package:onimo/models/themes/default_theme.dart';
-import 'package:onimo/views/screens/rooms.dart';
+import '/models/themes/default_theme.dart';
+import '/views/screens/rooms.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,10 +28,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Onimo',
       theme: DefaultTheme.instance.themeData,
-      home: const RoomsScreen(userNickname: 'john_doe7'),
-      routes: {
-        'rooms': (_) => const RoomsScreen(userNickname: 'john_doe7'),
-      },
+      home: const RoomsScreen(userId: 'uid_temp', userNickname: 'john_doe7'),
     );
   }
 }

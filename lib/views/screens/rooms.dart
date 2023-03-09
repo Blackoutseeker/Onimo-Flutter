@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:onimo/views/widgets/rooms/list.dart';
 
 class RoomsScreen extends StatelessWidget {
-  const RoomsScreen({super.key, required this.userNickname});
+  const RoomsScreen({
+    super.key,
+    required this.userId,
+    required this.userNickname,
+  });
 
+  final String userId;
   final String userNickname;
 
   void _openInfoModal(BuildContext context) {
@@ -42,7 +47,7 @@ class RoomsScreen extends StatelessWidget {
           onPressed: () => _openInfoModal(context),
           child: const Icon(Icons.add),
         ),
-        body: const RoomsList(),
+        body: RoomsList(userId: userId, userNickname: userNickname),
       ),
     );
   }

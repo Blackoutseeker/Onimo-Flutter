@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '/views/screens/chat.dart';
+
 class RoomsList extends StatefulWidget {
-  const RoomsList({super.key});
+  const RoomsList({
+    super.key,
+    required this.userId,
+    required this.userNickname,
+  });
+
+  final String userId;
+  final String userNickname;
 
   @override
   State<RoomsList> createState() => _RoomsListState();
@@ -22,6 +31,21 @@ class _RoomsListState extends State<RoomsList> {
       "active_users": 2,
     }
   ];
+
+  Future<void> _navigateToChatRoom(
+    BuildContext context,
+    String roomId,
+    String roomName,
+  ) async {
+    await Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (_) => ChatScreen(
+        userId: widget.userId,
+        userNickname: widget.userNickname,
+        roomId: roomId,
+        roomName: roomName,
+      ),
+    ));
+  }
 
   @override
   void initState() {
@@ -55,6 +79,8 @@ class _RoomsListState extends State<RoomsList> {
       separatorBuilder: (_, __) => const SizedBox(height: 8),
       itemCount: _availableRooms.length,
       itemBuilder: (_, index) => Card(
+        color: Colors.transparent,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
           side: const BorderSide(
@@ -62,9 +88,12 @@ class _RoomsListState extends State<RoomsList> {
             width: 2,
           ),
         ),
-        color: const Color(0xFF111111),
         child: ListTile(
-          onTap: () => {},
+          onTap: () async => await _navigateToChatRoom(
+            context,
+            _availableRooms[index]['id'],
+            _availableRooms[index]['name'],
+          ),
           title: Text(
             _availableRooms[index]['name'],
             style: const TextStyle(

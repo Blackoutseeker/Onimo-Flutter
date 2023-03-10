@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './rooms.dart';
 import '../widgets/chat/list.dart';
+import '../widgets/chat/footer.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({
@@ -32,50 +33,50 @@ class ChatScreen extends StatelessWidget {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async => await _navigateToPreviousScreen(context),
-        child: Scaffold(
-          appBar: AppBar(
-            titleSpacing: 0,
-            leading: IconButton(
-              onPressed: () async => await _navigateToPreviousScreen(context),
-              icon: const Icon(Icons.arrow_back),
-            ),
-            title: Text(
-              roomName,
-              style: const TextStyle(
-                fontSize: 18,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            appBar: AppBar(
+              titleSpacing: 0,
+              leading: IconButton(
+                onPressed: () async => await _navigateToPreviousScreen(context),
+                icon: const Icon(Icons.arrow_back),
               ),
-            ),
-            actions: [
-              SizedBox(
-                width: 90,
-                child: Row(
-                  children: [
-                    Text(
-                      '$_activeUsers/$_maxUsersAllowed',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    const Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ],
+              title: Text(
+                roomName,
+                style: const TextStyle(
+                  fontSize: 18,
                 ),
               ),
-            ],
-          ),
-          body: Column(
-            children: const [
-              Expanded(child: MessagesList()),
-              SizedBox(
-                height: 86,
-                child: Placeholder(),
-              ),
-            ],
+              actions: [
+                SizedBox(
+                  width: 90,
+                  child: Row(
+                    children: [
+                      Text(
+                        '$_activeUsers/$_maxUsersAllowed',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            body: Column(
+              children: const [
+                Expanded(child: MessagesList()),
+                Footer(),
+              ],
+            ),
           ),
         ),
       ),

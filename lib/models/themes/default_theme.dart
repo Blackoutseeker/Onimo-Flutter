@@ -20,5 +20,18 @@ class DefaultTheme {
     dialogTheme: const DialogTheme(
       backgroundColor: Color(0xFF1E1E1E),
     ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        side: const BorderSide(
+          color: Color(0xFF999999),
+          width: 2,
+        ),
+      ),
+    ),
   );
 }

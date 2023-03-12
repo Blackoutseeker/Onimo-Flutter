@@ -72,9 +72,9 @@ class ChatScreen extends StatelessWidget {
               ],
             ),
             body: Column(
-              children: const [
-                MessagesList(),
-                Footer(),
+              children: [
+                MessagesList(roomId: roomId),
+                const Footer(),
               ],
             ),
           ),

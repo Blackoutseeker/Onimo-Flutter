@@ -25,7 +25,12 @@ class RoomsScreen extends StatelessWidget {
   Future<void> _openAddModal(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (_) => const AlertDialog(content: AddModal()),
+      builder: (dialogContext) => GestureDetector(
+        onTap: FocusScope.of(dialogContext).unfocus,
+        child: const AlertDialog(
+          content: AddModal(),
+        ),
+      ),
     );
   }
 

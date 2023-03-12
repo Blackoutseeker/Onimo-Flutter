@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/rooms/info_modal.dart';
 import '../widgets/rooms/add_modal.dart';
 import '../widgets/rooms/list.dart';
 
@@ -17,7 +18,7 @@ class RoomsScreen extends StatelessWidget {
     await showDialog(
       context: context,
       builder: (_) => const AlertDialog(
-        content: SizedBox(),
+        content: InfoModal(),
       ),
     );
   }
@@ -47,7 +48,7 @@ class RoomsScreen extends StatelessWidget {
           ),
           actions: <IconButton>[
             IconButton(
-              onPressed: () => _openInfoModal(context),
+              onPressed: () async => await _openInfoModal(context),
               icon: const Icon(
                 Icons.info_outline,
                 color: Color(0xFF999999),
@@ -57,7 +58,7 @@ class RoomsScreen extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _openAddModal(context),
+          onPressed: () async => await _openAddModal(context),
           child: const Icon(Icons.add),
         ),
         body: RoomsList(userId: userId, userNickname: userNickname),

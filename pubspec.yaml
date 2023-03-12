@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.0
+  substring_highlight: ^1.0.33
 
 dev_dependencies:
   flutter_test:

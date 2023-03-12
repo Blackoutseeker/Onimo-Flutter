@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:substring_highlight/substring_highlight.dart';
 import 'package:intl/intl.dart';
 
 class MessageCard extends StatelessWidget {
@@ -16,6 +17,7 @@ class MessageCard extends StatelessWidget {
   final String bodyText;
 
   final String _localUserId = 'uid_temp';
+  final String _localUserNickname = 'john_doe7';
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +55,27 @@ class MessageCard extends StatelessWidget {
                   ),
                 ),
               if (!isLocalUser) const SizedBox(height: 12),
-              Text(
-                bodyText,
-                style: TextStyle(
-                  color: isLocalUser
-                      ? const Color(0xFFFFFFFF)
-                      : const Color(0xFF999999),
-                  fontSize: 14,
+              if (!isLocalUser)
+                SubstringHighlight(
+                  text: bodyText,
+                  caseSensitive: true,
+                  term: '@$_localUserNickname',
+                  textStyleHighlight: const TextStyle(
+                    color: Color(0xFF166CED),
+                  ),
+                  textStyle: const TextStyle(
+                    color: Color(0xFF999999),
+                    fontSize: 14,
+                  ),
                 ),
-              ),
+              if (isLocalUser)
+                Text(
+                  bodyText,
+                  style: const TextStyle(
+                    color: Color(0xFFFFFFFF),
+                    fontSize: 14,
+                  ),
+                ),
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,

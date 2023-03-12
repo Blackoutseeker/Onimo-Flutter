@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'code_input.dart';
+
 class AddModal extends StatelessWidget {
   const AddModal({super.key});
 
@@ -17,6 +19,11 @@ class AddModal extends StatelessWidget {
         const SizedBox(height: 10),
         _renderButton(() async => {}, 'Privada', Icons.lock),
         const SizedBox(height: 10),
+        const Divider(color: Color(0xFF999999)),
+        const SizedBox(height: 10),
+        _renderTitle('Entrar em uma sala'),
+        const SizedBox(height: 20),
+        const CodeInput(),
       ].reversed.toList(),
     );
   }

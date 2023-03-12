@@ -11,7 +11,7 @@ class Message {
   final String sendTimestamp;
   final String bodyText;
 
-  factory Message.convertFromDatabase(Map<String, dynamic> data) {
+  factory Message.convertFromDatabase(Map<dynamic, dynamic> data) {
     return Message(
       senderId: data['sender_id'],
       senderNickname: data['sender_nickname'],

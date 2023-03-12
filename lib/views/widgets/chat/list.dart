@@ -53,20 +53,48 @@ class _MessagesListState extends State<MessagesList> {
   @override
   Widget build(BuildContext context) {
     if (_messages.isEmpty) {
-      return const Placeholder();
+      return Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width / 10,
+          ),
+          child: Column(
+            children: const [
+              Card(
+                color: Color(0xFF1E1E1E),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(14),
+                  child: Text(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
+                    style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
-    return ListView.separated(
-      shrinkWrap: true,
-      reverse: true,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      separatorBuilder: (_, __) => const SizedBox(height: 10),
-      itemCount: _messages.length,
-      itemBuilder: (_, index) => MessageCard(
-        senderId: _messages[index]['sender_id'] ?? 'undef',
-        senderNickname: _messages[index]['sender_nickname'] ?? 'undef',
-        sendTimestamp: _messages[index]['send_timestamp'] ?? 'undef',
-        bodyText: _messages[index]['body_text'] ?? 'undef',
+    return Expanded(
+      child: ListView.separated(
+        shrinkWrap: true,
+        reverse: true,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        separatorBuilder: (_, __) => const SizedBox(height: 10),
+        itemCount: _messages.length,
+        itemBuilder: (_, index) => MessageCard(
+          senderId: _messages[index]['sender_id'] ?? 'undef',
+          senderNickname: _messages[index]['sender_nickname'] ?? 'undef',
+          sendTimestamp: _messages[index]['send_timestamp'] ?? 'undef',
+          bodyText: _messages[index]['body_text'] ?? 'undef',
+        ),
       ),
     );
   }

@@ -9,6 +9,7 @@ class AddModal extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       shrinkWrap: true,
       primary: false,
+      reverse: true,
       children: [
         _renderTitle('Criar nova sala'),
         const SizedBox(height: 20),
@@ -16,7 +17,7 @@ class AddModal extends StatelessWidget {
         const SizedBox(height: 10),
         _renderButton(() async => {}, 'Privada', Icons.lock),
         const SizedBox(height: 10),
-      ],
+      ].reversed.toList(),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:onimo/views/widgets/rooms/list.dart';
+import '../widgets/rooms/add_modal.dart';
+import '../widgets/rooms/list.dart';
 
 class RoomsScreen extends StatelessWidget {
   const RoomsScreen({
@@ -12,12 +13,19 @@ class RoomsScreen extends StatelessWidget {
   final String userId;
   final String userNickname;
 
-  void _openInfoModal(BuildContext context) {
-    showDialog(
+  Future<void> _openInfoModal(BuildContext context) async {
+    await showDialog(
       context: context,
       builder: (_) => const AlertDialog(
         content: SizedBox(),
       ),
+    );
+  }
+
+  Future<void> _openAddModal(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (_) => const AlertDialog(content: AddModal()),
     );
   }
 
@@ -44,7 +52,7 @@ class RoomsScreen extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _openInfoModal(context),
+          onPressed: () => _openAddModal(context),
           child: const Icon(Icons.add),
         ),
         body: RoomsList(userId: userId, userNickname: userNickname),

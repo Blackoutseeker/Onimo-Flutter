@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './message_card.dart';
+import 'package:onimo/models/entities/message.dart';
 
 class MessagesList extends StatefulWidget {
   const MessagesList({super.key});
@@ -90,10 +91,7 @@ class _MessagesListState extends State<MessagesList> {
         separatorBuilder: (_, __) => const SizedBox(height: 10),
         itemCount: _messages.length,
         itemBuilder: (_, index) => MessageCard(
-          senderId: _messages[index]['sender_id'] ?? 'undef',
-          senderNickname: _messages[index]['sender_nickname'] ?? 'undef',
-          sendTimestamp: _messages[index]['send_timestamp'] ?? 'undef',
-          bodyText: _messages[index]['body_text'] ?? 'undef',
+          message: Message.convertFromDatabase(_messages[index]),
         ),
       ),
     );

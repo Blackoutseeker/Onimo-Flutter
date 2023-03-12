@@ -2,26 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 import 'package:intl/intl.dart';
 
+import 'package:onimo/models/entities/message.dart';
+
 class MessageCard extends StatelessWidget {
   const MessageCard({
     super.key,
-    required this.senderId,
-    required this.senderNickname,
-    required this.sendTimestamp,
-    required this.bodyText,
+    required this.message,
   });
 
-  final String senderId;
-  final String senderNickname;
-  final String sendTimestamp;
-  final String bodyText;
-
+  final Message message;
   final String _localUserId = 'uid_temp';
   final String _localUserNickname = 'john_doe7';
 
   @override
   Widget build(BuildContext context) {
-    final bool isLocalUser = (senderId == _localUserId);
+    final bool isLocalUser = (message.senderId == _localUserId);
 
     return Padding(
       padding: EdgeInsets.only(
@@ -47,7 +42,7 @@ class MessageCard extends StatelessWidget {
             children: [
               if (!isLocalUser)
                 Text(
-                  senderNickname,
+                  message.senderNickname,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -57,7 +52,7 @@ class MessageCard extends StatelessWidget {
               if (!isLocalUser) const SizedBox(height: 12),
               if (!isLocalUser)
                 SubstringHighlight(
-                  text: bodyText,
+                  text: message.bodyText,
                   caseSensitive: true,
                   term: '@$_localUserNickname',
                   textStyleHighlight: const TextStyle(
@@ -70,7 +65,7 @@ class MessageCard extends StatelessWidget {
                 ),
               if (isLocalUser)
                 Text(
-                  bodyText,
+                  message.bodyText,
                   style: const TextStyle(
                     color: Color(0xFFFFFFFF),
                     fontSize: 14,
@@ -80,7 +75,9 @@ class MessageCard extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  DateFormat('HH:mm').format(DateTime.parse(sendTimestamp)),
+                  DateFormat('HH:mm').format(
+                    DateTime.parse(message.sendTimestamp),
+                  ),
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     color: isLocalUser

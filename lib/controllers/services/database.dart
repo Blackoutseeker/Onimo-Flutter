@@ -27,4 +27,10 @@ class Database {
 
     return messages;
   }
+
+  Future<void> insertMessageIntoDatabase(String roomId, Message message) async {
+    await _firebaseDatabase
+        .ref('chat_rooms/$roomId/chat/${message.sendTimestamp}')
+        .set(message.convertToDatabase());
+  }
 }

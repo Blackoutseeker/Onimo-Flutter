@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:onimo/controllers/services/database.dart';
-import './message_card.dart';
 import 'package:onimo/models/entities/message.dart';
+import './message_card.dart';
 
 class MessagesList extends StatefulWidget {
   const MessagesList({super.key, required this.roomId});

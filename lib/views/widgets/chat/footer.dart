@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:onimo/models/entities/message.dart';
+import 'package:onimo/controllers/services/database.dart';
+
 const int _maxLength = 300;
 
 class Footer extends StatefulWidget {
-  const Footer({super.key});
+  const Footer({super.key, required this.roomId});
+
+  final String roomId;
 
   @override
   State<Footer> createState() => _FooterState();
@@ -18,6 +23,31 @@ class _FooterState extends State<Footer> {
     setState(() {
       _counter = text.length.toString();
     });
+  }
+
+  Future<void> _sendMessage() async {
+    if (_textFieldController.text.isNotEmpty) {
+      const String userId = 'uid_temp';
+      const String userNickname = 'john_doe7';
+      final String sendTimestamp = DateTime.now().toString().split('.')[0];
+      final String bodyText = _textFieldController.text;
+
+      final Message message = Message(
+        senderId: userId,
+        senderNickname: userNickname,
+        sendTimestamp: sendTimestamp,
+        bodyText: bodyText,
+      );
+
+      await Database.instance
+          .insertMessageIntoDatabase(widget.roomId, message)
+          .then((_) {
+        _textFieldController.clear();
+        setState(() {
+          _counter = '0';
+        });
+      });
+    }
   }
 
   @override
@@ -101,10 +131,11 @@ class _FooterState extends State<Footer> {
             width: 47,
             height: 47,
             child: FloatingActionButton(
-              onPressed: _enabled ? () => {} : null,
+              onPressed: _counter != '0' ? _sendMessage : null,
               elevation: 0,
-              backgroundColor:
-                  _enabled ? const Color(0xFF166CED) : const Color(0xFF111111),
+              backgroundColor: _counter != '0'
+                  ? const Color(0xFF166CED)
+                  : const Color(0xFF111111),
               child: const Icon(Icons.send, size: 18),
             ),
           ),

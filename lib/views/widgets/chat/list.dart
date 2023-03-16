@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import 'package:onimo/controllers/services/database.dart';
 import 'package:onimo/models/entities/message.dart';
 import './message_card.dart';
 
@@ -28,12 +27,6 @@ class _MessagesListState extends State<MessagesList> {
     });
   }
 
-  Future<void> _getMessages() async {
-    await Database.instance
-        .getChatMessagesByRoomId(widget.roomId)
-        .then(_setMessagesState);
-  }
-
   void _initializeChatListener() {
     final List<Message> messages = [];
 
@@ -56,7 +49,6 @@ class _MessagesListState extends State<MessagesList> {
   @override
   void initState() {
     super.initState();
-    _getMessages();
     _initializeChatListener();
   }
 

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'package:onimo/controllers/services/database.dart';
 import 'package:onimo/models/entities/message.dart';
@@ -14,27 +17,52 @@ class MessagesList extends StatefulWidget {
 }
 
 class _MessagesListState extends State<MessagesList> {
+  final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
+
   List<Message> _messages = [];
+  late StreamSubscription<DatabaseEvent> _messagesSubscription;
+
+  void _setMessagesState(List<Message> messages) {
+    setState(() {
+      _messages = messages;
+    });
+  }
 
   Future<void> _getMessages() async {
     await Database.instance
         .getChatMessagesByRoomId(widget.roomId)
-        .then((messages) {
-      setState(() {
-        _messages = messages;
-      });
+        .then(_setMessagesState);
+  }
+
+  void _initializeChatListener() {
+    final List<Message> messages = [];
+
+    _messagesSubscription = _firebaseDatabase
+        .ref('chat_rooms/${widget.roomId}/chat')
+        .onChildAdded
+        .listen((event) {
+      final messageFromDatabase =
+          Map<String, dynamic>.from(event.snapshot.value as Map);
+      messages.add(Message.convertFromDatabase(messageFromDatabase));
+      messages.sort((a, b) => b.sendTimestamp.compareTo(a.sendTimestamp));
+      _setMessagesState(messages);
     });
+  }
+
+  void _stopChatListener() {
+    _messagesSubscription.cancel();
   }
 
   @override
   void initState() {
     super.initState();
     _getMessages();
+    _initializeChatListener();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _stopChatListener();
     super.dispose();
   }
 

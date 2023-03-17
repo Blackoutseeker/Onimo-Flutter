@@ -32,6 +32,7 @@ class _MessagesListState extends State<MessagesList> {
 
     _messagesSubscription = _firebaseDatabase
         .ref('chat_rooms/${widget.roomId}/chat')
+        .limitToLast(10)
         .onChildAdded
         .listen((event) {
       final messageFromDatabase =

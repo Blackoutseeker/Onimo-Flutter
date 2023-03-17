@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:onimo/models/entities/message.dart';
+import './blank_chat.dart';
 import './message_card.dart';
 
 class MessagesList extends StatefulWidget {
@@ -62,33 +63,7 @@ class _MessagesListState extends State<MessagesList> {
   @override
   Widget build(BuildContext context) {
     if (_messages.isEmpty) {
-      return Expanded(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width / 10,
-          ),
-          child: Column(
-            children: const [
-              Card(
-                color: Color(0xFF1E1E1E),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(14),
-                  child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                    style: TextStyle(
-                      color: Color(0xFF999999),
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      return const BlankChat();
     }
 
     return Expanded(

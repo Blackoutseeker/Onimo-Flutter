@@ -36,14 +36,16 @@ class Room {
   factory Room.convertFromDatabase(Map<dynamic, dynamic> data) {
     final List<ActiveUser> activeUsers = [];
 
-    (data['active_users'] as Map).forEach((key, value) {
-      activeUsers.add(
-        ActiveUser(
-          id: key,
-          status: value['status'],
-        ),
-      );
-    });
+    if (data['active_users'] != null) {
+      (data['active_users'] as Map).forEach((key, value) {
+        activeUsers.add(
+          ActiveUser(
+            id: key,
+            status: value['status'],
+          ),
+        );
+      });
+    }
 
     return Room(
       id: data['id'],

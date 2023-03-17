@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+import 'package:onimo/models/entities/room.dart';
 import '/views/screens/chat.dart';
 
 class RoomsList extends StatefulWidget {
@@ -17,20 +21,10 @@ class RoomsList extends StatefulWidget {
 }
 
 class _RoomsListState extends State<RoomsList> {
-  final List<Map<String, dynamic>> _availableRooms = [
-    {
-      "id": "ALkfam24msxcvlsdg",
-      "name": "Room 01",
-      "type": "public",
-      "active_users": 1,
-    },
-    {
-      "id": "Fasfwa24xcvxca",
-      "name": "Room 02",
-      "type": "public",
-      "active_users": 2,
-    }
-  ];
+  final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
+
+  List<Room> _rooms = [];
+  late StreamSubscription _roomsSubscription;
 
   Future<void> _navigateToChatRoom(
     BuildContext context,
@@ -47,21 +41,50 @@ class _RoomsListState extends State<RoomsList> {
     ));
   }
 
+  void _setRoomsState(List<Room> rooms) {
+    setState(() {
+      _rooms = rooms;
+    });
+  }
+
+  void _initializeRoomsListener() {
+    _roomsSubscription =
+        _firebaseDatabase.ref('available_rooms').onValue.listen((event) {
+      final List<Room> rooms = [];
+      final roomsFromDatabase =
+          Map<String, dynamic>.from(event.snapshot.value as Map);
+
+      roomsFromDatabase.forEach((key, room) {
+        rooms.add(Room.convertFromDatabase(room));
+      });
+
+      rooms.sort(
+        (a, b) => a.activeUsers.length.compareTo(b.activeUsers.length),
+      );
+
+      _setRoomsState(rooms);
+    });
+  }
+
+  void _stopRoomsListener() {
+    _roomsSubscription.cancel();
+  }
+
   @override
   void initState() {
     super.initState();
-    // TODO: implement initState
+    _initializeRoomsListener();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _stopRoomsListener();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_availableRooms.isEmpty) {
+    if (_rooms.isEmpty) {
       return const Center(
         heightFactor: 8,
         child: Text(
@@ -77,7 +100,7 @@ class _RoomsListState extends State<RoomsList> {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       separatorBuilder: (_, __) => const SizedBox(height: 8),
-      itemCount: _availableRooms.length,
+      itemCount: _rooms.length,
       itemBuilder: (_, index) => Card(
         color: Colors.transparent,
         elevation: 0,
@@ -91,11 +114,11 @@ class _RoomsListState extends State<RoomsList> {
         child: ListTile(
           onTap: () async => await _navigateToChatRoom(
             context,
-            _availableRooms[index]['id'],
-            _availableRooms[index]['name'],
+            _rooms[index].id,
+            _rooms[index].name,
           ),
           title: Text(
-            _availableRooms[index]['name'],
+            _rooms[index].name,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -107,7 +130,7 @@ class _RoomsListState extends State<RoomsList> {
             child: Row(
               children: [
                 Text(
-                  '${_availableRooms[index]['active_users']}/5',
+                  '${_rooms[index].activeUsers.length}/5',
                   style: const TextStyle(
                     color: Color(0xFF999999),
                     fontSize: 14,

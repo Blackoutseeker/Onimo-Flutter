@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DefaultTheme {
-  static DefaultTheme instance = DefaultTheme();
-
-  ThemeData themeData = ThemeData(
+  static ThemeData themeData = ThemeData(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Color(0xFF166CED),
     ),

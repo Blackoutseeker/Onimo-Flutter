@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:onimo/models/entities/room.dart';
-import '/views/screens/chat.dart';
+import './room_card.dart';
 
 class RoomsList extends StatefulWidget {
   const RoomsList({
@@ -25,21 +25,6 @@ class _RoomsListState extends State<RoomsList> {
 
   List<Room> _rooms = [];
   late StreamSubscription _roomsSubscription;
-
-  Future<void> _navigateToChatRoom(
-    BuildContext context,
-    String roomId,
-    String roomName,
-  ) async {
-    await Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (_) => ChatScreen(
-        userId: widget.userId,
-        userNickname: widget.userNickname,
-        roomId: roomId,
-        roomName: roomName,
-      ),
-    ));
-  }
 
   void _setRoomsState(List<Room> rooms) {
     setState(() {
@@ -101,51 +86,11 @@ class _RoomsListState extends State<RoomsList> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       separatorBuilder: (_, __) => const SizedBox(height: 8),
       itemCount: _rooms.length,
-      itemBuilder: (_, index) => Card(
-        color: Colors.transparent,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
-          side: const BorderSide(
-            color: Color(0xFF1E1E1E),
-            width: 2,
-          ),
-        ),
-        child: ListTile(
-          onTap: () async => await _navigateToChatRoom(
-            context,
-            _rooms[index].id,
-            _rooms[index].name,
-          ),
-          title: Text(
-            _rooms[index].name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          trailing: SizedBox(
-            width: 62,
-            child: Row(
-              children: [
-                Text(
-                  '${_rooms[index].activeUsers.length}/5',
-                  style: const TextStyle(
-                    color: Color(0xFF999999),
-                    fontSize: 14,
-                  ),
-                ),
-                const Spacer(),
-                const Icon(
-                  Icons.person,
-                  color: Color(0xFF999999),
-                  size: 20,
-                ),
-              ],
-            ),
-          ),
-        ),
+      itemBuilder: (_, index) => RoomCard(
+        key: UniqueKey(),
+        userId: widget.userId,
+        userNickname: widget.userNickname,
+        room: _rooms[index],
       ),
     );
   }

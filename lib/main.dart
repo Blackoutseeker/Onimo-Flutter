@@ -29,7 +29,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Onimo',
-      theme: DefaultTheme.instance.themeData,
+      theme: DefaultTheme.themeData,
       home: const RoomsScreen(userId: 'uid_temp', userNickname: 'john_doe7'),
     );
   }

@@ -15,4 +15,17 @@ class Utils {
 
     return randomId;
   }
+
+  static String generateNickname() {
+    String nickname = '';
+
+    final int randomUnit = Random().nextInt(10) + 1; // [1-9]
+    final int randomNicknameIndex = Random().nextInt(
+      Constants.nicknames.length,
+    );
+    final String randomNickname = Constants.nicknames[randomNicknameIndex];
+    nickname = randomNickname + randomUnit.toString();
+
+    return nickname;
+  }
 }

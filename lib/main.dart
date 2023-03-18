@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:cryptography_flutter/cryptography_flutter.dart';
 
 import '/models/themes/default_theme.dart';
 import '/views/screens/rooms.dart';
@@ -10,6 +11,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate();
+
+  FlutterCryptography();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

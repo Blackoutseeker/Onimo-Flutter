@@ -45,3 +45,6 @@ app.*.map.json
 
 # Thumbs files
 Thumbs.db
+
+# Auto generated Dart files
+*g.dart

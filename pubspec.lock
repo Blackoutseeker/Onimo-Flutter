@@ -232,6 +232,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
+  mobx:
+    dependency: "direct main"
+    description:
+      name: mobx
+      sha256: "6738620307a424d2c9ad8b873f4dce391c44e9135eb4e75668ac8202fec7a9b8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   path:
     dependency: transitive
     description:

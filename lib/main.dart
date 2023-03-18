@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cryptography_flutter/cryptography_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 
-import '/models/themes/default_theme.dart';
-import '/views/screens/rooms.dart';
+import './controllers/stores/session.dart';
+import './models/themes/default_theme.dart';
+import './views/screens/rooms.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,15 +16,16 @@ void main() async {
   await FirebaseAppCheck.instance.activate();
 
   FlutterCryptography();
-
   await Hive.initFlutter();
+
+  final GetIt getIt = GetIt.I;
+  getIt.registerLazySingleton<SessionStore>(() => SessionStore());
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Color(0xFF111111),
     ),
   );
-
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(const App());

@@ -12,6 +12,7 @@ dependencies:
   firebase_database: ^10.0.15
   flutter:
     sdk: flutter
+  hive: ^2.2.3
   intl: ^0.18.0
   substring_highlight: ^1.0.33
 

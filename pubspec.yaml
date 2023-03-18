@@ -13,6 +13,7 @@ dependencies:
   firebase_database: ^10.0.15
   flutter:
     sdk: flutter
+  get_it: ^7.2.0
   hive: ^2.2.3
   intl: ^0.18.0
   mobx: ^2.1.4

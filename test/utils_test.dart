@@ -16,4 +16,14 @@ void main() {
       expect(randomId.length, expectedLength);
     });
   });
+
+  group('Testing generateNickname method from Utils class.', () {
+    test(
+        'Should return a String formatted with "^[a-z]+_[a-z]+[1-9]\$" RegExp.',
+        () {
+      final RegExp nicknamePattern = RegExp(r'^[a-z]+_[a-z]+[1-9]$');
+      final String nickname = Utils.generateNickname();
+      expect(nicknamePattern.hasMatch(nickname), true);
+    });
+  });
 }

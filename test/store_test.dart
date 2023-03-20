@@ -1,11 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 
 import 'package:onimo/models/entities/session.dart';
 import 'package:onimo/controllers/stores/session.dart';
 
 void main() {
   group('Testing SessionStore class.', () {
-    final String currentDate = DateTime.now().toString().split('.')[0];
+    final String currentDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(
+      DateTime.now(),
+    );
 
     final Session customSession = Session(
       userId: 'fake_uid',

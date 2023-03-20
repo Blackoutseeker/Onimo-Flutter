@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 
 import 'package:onimo/models/entities/session.dart';
 import './local_storage.dart';
@@ -27,11 +28,14 @@ class SessionManager {
   static Future<void> _createNewSession() async {
     final String newUserId = Utils.generateRandomId();
     final String newUserNickname = Utils.generateNickname();
+    final String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(
+      DateTime.now(),
+    );
 
     final Session newSession = Session(
       userId: newUserId,
       userNickname: newUserNickname,
-      lastSessionDate: DateTime.now().toString().split('.')[0],
+      lastSessionDate: formattedDate,
     );
 
     await LocalStorage.saveCurrentSession(newSession);

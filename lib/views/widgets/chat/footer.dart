@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:onimo/models/entities/message.dart';
 import 'package:onimo/controllers/services/database.dart';
@@ -29,7 +30,9 @@ class _FooterState extends State<Footer> {
     if (_textFieldController.text.isNotEmpty) {
       const String userId = 'uid_temp';
       const String userNickname = 'john_doe7';
-      final String sendTimestamp = DateTime.now().toString().split('.')[0];
+      final String sendTimestamp = DateFormat('yyyy-MM-dd HH:mm:ss').format(
+        DateTime.now(),
+      );
       final String bodyText = _textFieldController.text;
 
       final Message message = Message(

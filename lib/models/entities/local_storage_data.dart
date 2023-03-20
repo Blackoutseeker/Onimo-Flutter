@@ -16,4 +16,12 @@ class LocalStorageData {
       'last_session_date': lastSessionDate,
     };
   }
+
+  factory LocalStorageData.fromStorage(Map<dynamic, dynamic> data) {
+    return LocalStorageData(
+      userId: data['user_id'],
+      userNickname: data['user_nickname'],
+      lastSessionDate: data['last_session_date'],
+    );
+  }
 }

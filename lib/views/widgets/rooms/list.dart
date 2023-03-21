@@ -7,14 +7,7 @@ import 'package:onimo/models/entities/room.dart';
 import './room_card.dart';
 
 class RoomsList extends StatefulWidget {
-  const RoomsList({
-    super.key,
-    required this.userId,
-    required this.userNickname,
-  });
-
-  final String userId;
-  final String userNickname;
+  const RoomsList({super.key});
 
   @override
   State<RoomsList> createState() => _RoomsListState();
@@ -88,8 +81,6 @@ class _RoomsListState extends State<RoomsList> {
       itemCount: _rooms.length,
       itemBuilder: (_, index) => RoomCard(
         key: UniqueKey(),
-        userId: widget.userId,
-        userNickname: widget.userNickname,
         room: _rooms[index],
       ),
     );

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import 'package:onimo/controllers/stores/session.dart';
 import '../widgets/rooms/info_modal.dart';
 import '../widgets/rooms/add_modal.dart';
 import '../widgets/rooms/list.dart';
 
 class RoomsScreen extends StatelessWidget {
-  const RoomsScreen({
-    super.key,
-    required this.userId,
-    required this.userNickname,
-  });
+  RoomsScreen({super.key});
 
-  final String userId;
-  final String userNickname;
+  final SessionStore _store = GetIt.I.get<SessionStore>();
 
   Future<void> _openInfoModal(BuildContext context) async {
     await showDialog(
@@ -41,7 +38,7 @@ class RoomsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            userNickname,
+            _store.session.userNickname,
             style: const TextStyle(
               fontSize: 22,
             ),
@@ -61,7 +58,7 @@ class RoomsScreen extends StatelessWidget {
           onPressed: () async => await _openAddModal(context),
           child: const Icon(Icons.add),
         ),
-        body: RoomsList(userId: userId, userNickname: userNickname),
+        body: const RoomsList(),
       ),
     );
   }

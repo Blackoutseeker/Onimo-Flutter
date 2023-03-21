@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import 'package:onimo/controllers/stores/session.dart';
 import 'package:onimo/models/entities/room.dart';
 import 'package:onimo/views/screens/chat.dart';
 
 class RoomCard extends StatelessWidget {
-  const RoomCard({
-    super.key,
-    required this.userId,
-    required this.userNickname,
-    required this.room,
-  });
+  RoomCard({super.key, required this.room});
 
-  final String userId;
-  final String userNickname;
   final Room room;
+  final SessionStore _store = GetIt.I.get<SessionStore>();
 
   Future<void> _navigateToChatRoom(
     BuildContext context,
     String roomId,
     String roomName,
   ) async {
-    await Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (_) => ChatScreen(
-        userId: userId,
-        userNickname: userNickname,
-        roomId: roomId,
-        roomName: roomName,
+    _store.updateCurrentSessionRoom(roomId: roomId);
+
+    await Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => ChatScreen(
+          roomName: roomName,
+        ),
       ),
-    ));
+    );
   }
 
   @override

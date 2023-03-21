@@ -5,26 +5,19 @@ import '../widgets/chat/list.dart';
 import '../widgets/chat/footer.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({
-    super.key,
-    required this.roomId,
-    required this.roomName,
-    required this.userId,
-    required this.userNickname,
-  });
+  const ChatScreen({super.key, required this.roomName});
 
-  final String userId;
-  final String userNickname;
-  final String roomId;
   final String roomName;
 
   final int _activeUsers = 3;
   final int _maxUsersAllowed = 5;
 
   Future<bool> _navigateToPreviousScreen(BuildContext context) async {
-    await Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (_) => RoomsScreen(userId: userId, userNickname: userNickname),
-    ));
+    await Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => RoomsScreen(),
+      ),
+    );
     return true;
   }
 
@@ -72,9 +65,9 @@ class ChatScreen extends StatelessWidget {
               ],
             ),
             body: Column(
-              children: [
-                MessagesList(roomId: roomId),
-                Footer(roomId: roomId),
+              children: const [
+                MessagesList(),
+                Footer(),
               ],
             ),
           ),

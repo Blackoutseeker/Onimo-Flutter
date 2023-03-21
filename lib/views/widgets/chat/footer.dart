@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 
+import 'package:onimo/controllers/stores/session.dart';
 import 'package:onimo/models/entities/message.dart';
 import 'package:onimo/controllers/services/database.dart';
 
-const int _maxLength = 300;
+const int _maxMessageLength = 300;
 
 class Footer extends StatefulWidget {
-  const Footer({super.key, required this.roomId});
-
-  final String roomId;
+  const Footer({super.key});
 
   @override
   State<Footer> createState() => _FooterState();
@@ -17,6 +17,7 @@ class Footer extends StatefulWidget {
 
 class _FooterState extends State<Footer> {
   final TextEditingController _textFieldController = TextEditingController();
+  final SessionStore _store = GetIt.I.get<SessionStore>();
   final bool _enabled = true;
   String _counter = '0';
 
@@ -27,23 +28,22 @@ class _FooterState extends State<Footer> {
   }
 
   Future<void> _sendMessage() async {
-    if (_textFieldController.text.isNotEmpty) {
-      const String userId = 'uid_temp';
-      const String userNickname = 'john_doe7';
+    if (_textFieldController.text.isNotEmpty &&
+        _store.session.currentRoomId != null) {
       final String sendTimestamp = DateFormat('yyyy-MM-dd HH:mm:ss').format(
         DateTime.now(),
       );
       final String bodyText = _textFieldController.text;
 
       final Message message = Message(
-        senderId: userId,
-        senderNickname: userNickname,
+        senderId: _store.session.userId,
+        senderNickname: _store.session.userNickname,
         sendTimestamp: sendTimestamp,
         bodyText: bodyText,
       );
 
       await Database.instance
-          .insertMessageIntoDatabase(widget.roomId, message)
+          .insertMessageIntoDatabase(_store.session.currentRoomId!, message)
           .then((_) {
         _textFieldController.clear();
         setState(() {
@@ -71,7 +71,7 @@ class _FooterState extends State<Footer> {
               controller: _textFieldController,
               enabled: _enabled,
               onChanged: _setCounter,
-              maxLength: _maxLength,
+              maxLength: _maxMessageLength,
               minLines: 1,
               maxLines: 5,
               textCapitalization: TextCapitalization.sentences,
@@ -120,7 +120,7 @@ class _FooterState extends State<Footer> {
                 children: [
                   const SizedBox(width: 20),
                   Text(
-                    '$_counter/$_maxLength',
+                    '$_counter/$_maxMessageLength',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,

@@ -42,7 +42,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Onimo',
       theme: DefaultTheme.themeData,
-      home: const RoomsScreen(userId: 'uid_temp', userNickname: 'john_doe7'),
+      home: RoomsScreen(),
     );
   }
 }

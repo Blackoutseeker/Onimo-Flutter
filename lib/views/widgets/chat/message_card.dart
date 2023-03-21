@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:onimo/controllers/stores/session.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 import 'package:intl/intl.dart';
 
 import 'package:onimo/models/entities/message.dart';
 
 class MessageCard extends StatelessWidget {
-  const MessageCard({
+  MessageCard({
     super.key,
     required this.message,
   });
 
   final Message message;
-  final String _localUserId = 'uid_temp';
-  final String _localUserNickname = 'john_doe7';
+
+  final SessionStore _store = GetIt.I.get<SessionStore>();
 
   @override
   Widget build(BuildContext context) {
-    final bool isLocalUser = (message.senderId == _localUserId);
+    final bool isLocalUser = (message.senderId == _store.session.userId);
 
     return Padding(
       padding: EdgeInsets.only(
@@ -54,7 +56,7 @@ class MessageCard extends StatelessWidget {
                 SubstringHighlight(
                   text: message.bodyText,
                   caseSensitive: true,
-                  term: '@$_localUserNickname',
+                  term: '@${_store.session.userNickname}',
                   textStyleHighlight: const TextStyle(
                     color: Color(0xFF166CED),
                   ),

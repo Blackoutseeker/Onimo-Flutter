@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get_it/get_it.dart';
 
+import 'package:onimo/controllers/stores/session.dart';
 import 'package:onimo/models/entities/message.dart';
 import './blank_chat.dart';
 import './message_card.dart';
 
 class MessagesList extends StatefulWidget {
-  const MessagesList({super.key, required this.roomId});
-
-  final String roomId;
+  const MessagesList({super.key});
 
   @override
   State<MessagesList> createState() => _MessagesListState();
@@ -19,6 +19,7 @@ class MessagesList extends StatefulWidget {
 class _MessagesListState extends State<MessagesList> {
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   final ScrollController _scrollController = ScrollController();
+  final SessionStore _store = GetIt.I.get<SessionStore>();
 
   List<Message> _messages = [];
   late StreamSubscription<DatabaseEvent> _messagesSubscription;
@@ -32,19 +33,23 @@ class _MessagesListState extends State<MessagesList> {
   }
 
   void _initializeChatListener() {
-    final List<Message> messages = [];
+    if (_store.session.currentRoomId != null) {
+      final List<Message> messages = [];
 
-    _messagesSubscription = _firebaseDatabase
-        .ref('chat_rooms/${widget.roomId}/chat')
-        .limitToLast(10)
-        .onChildAdded
-        .listen((event) {
-      final messageFromDatabase =
-          Map<String, dynamic>.from(event.snapshot.value as Map);
-      messages.add(Message.convertFromDatabase(messageFromDatabase));
-      messages.sort((a, b) => b.sendTimestamp.compareTo(a.sendTimestamp));
-      _setMessagesState(messages);
-    });
+      _messagesSubscription = _firebaseDatabase
+          .ref('chat_rooms/${_store.session.currentRoomId}/chat')
+          .limitToLast(10)
+          .onChildAdded
+          .listen((event) {
+        final messageFromDatabase =
+            Map<String, dynamic>.from(event.snapshot.value as Map);
+
+        messages.add(Message.convertFromDatabase(messageFromDatabase));
+        messages.sort((a, b) => b.sendTimestamp.compareTo(a.sendTimestamp));
+
+        _setMessagesState(messages);
+      });
+    }
   }
 
   void _stopChatListener() {

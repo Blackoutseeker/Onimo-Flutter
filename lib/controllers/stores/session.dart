@@ -20,7 +20,10 @@ abstract class SessionStoreModel with Store {
   }
 
   @action
-  void updateCurrentSessionRoom(String? roomId, RoomType roomType) {
+  void updateCurrentSessionRoom({
+    String? roomId,
+    RoomType roomType = RoomType.public,
+  }) {
     session.currentRoomId = roomId;
     session.currentRoomType = roomType;
   }

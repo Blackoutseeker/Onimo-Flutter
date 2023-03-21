@@ -52,7 +52,10 @@ void main() {
       ];
 
       for (var room in rooms) {
-        sessionStore.updateCurrentSessionRoom(room['id'], room['type']);
+        sessionStore.updateCurrentSessionRoom(
+          roomId: room['id'],
+          roomType: room['type'],
+        );
         expect(sessionStore.session.currentRoomId, room['id']);
         expect(sessionStore.session.currentRoomType, room['type']);
       }

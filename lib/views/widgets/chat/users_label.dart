@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:onimo/controllers/stores/session.dart';
 import 'package:onimo/models/entities/session.dart';
+import 'package:onimo/controllers/services/database.dart';
 
 class ActiveUsersLabel extends StatefulWidget {
   const ActiveUsersLabel({
@@ -62,6 +63,7 @@ class _ActiveUsersLabelState extends State<ActiveUsersLabel> {
   void initState() {
     super.initState();
     _setActiveUsersLengthState(widget.initialUsersLength);
+    Database.connectUserToCurrentChat();
     _initializeActiveUsersListener();
   }
 

@@ -6,7 +6,6 @@ import 'package:onimo/models/entities/session.dart';
 import 'package:onimo/controllers/stores/session.dart';
 
 class Database {
-  static Database instance = Database();
   static final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
 
   static Future<void> insertMessageIntoDatabase(

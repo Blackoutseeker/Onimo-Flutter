@@ -42,8 +42,8 @@ class _FooterState extends State<Footer> {
         bodyText: bodyText,
       );
 
-      await Database.instance
-          .insertMessageIntoDatabase(_store.session.currentRoomId!, message)
+      await Database.insertMessageIntoDatabase(
+              _store.session.currentRoomId!, message)
           .then((_) {
         _textFieldController.clear();
         setState(() {

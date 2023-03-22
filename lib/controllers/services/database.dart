@@ -34,4 +34,18 @@ class Database {
       });
     }
   }
+
+  static Future<void> disconnectUserFromChat() async {
+    final SessionStore store = GetIt.I.get<SessionStore>();
+    final String? roomId = store.session.currentRoomId;
+    if (roomId == null) return;
+    final String userId = store.session.userId;
+    final RoomType roomType = store.session.currentRoomType;
+    String userReference = 'available_rooms/';
+
+    if (roomType == RoomType.private) userReference = 'chat_rooms/';
+    userReference += '$roomId/active_users/$userId';
+
+    await _firebaseDatabase.ref(userReference).remove();
+  }
 }

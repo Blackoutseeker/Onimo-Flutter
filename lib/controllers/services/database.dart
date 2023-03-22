@@ -16,36 +16,33 @@ class Database {
         .set(message.convertToDatabase());
   }
 
-  static Future<void> connectUserToCurrentChat() async {
+  static String? _getUserReference() {
     final SessionStore store = GetIt.I.get<SessionStore>();
     final String? roomId = store.session.currentRoomId;
-    if (roomId != null) {
-      final String userId = store.session.userId;
-      final RoomType roomType = store.session.currentRoomType;
-      String usersReference = 'available_rooms/';
+    if (roomId == null) return null;
 
-      if (roomType == RoomType.private) usersReference = 'chat_rooms/';
-      usersReference += '$roomId/active_users';
-
-      await _firebaseDatabase.ref(usersReference).update({
-        userId: {
-          'status': 'connected',
-        }
-      });
-    }
-  }
-
-  static Future<void> disconnectUserFromChat() async {
-    final SessionStore store = GetIt.I.get<SessionStore>();
-    final String? roomId = store.session.currentRoomId;
-    if (roomId == null) return;
     final String userId = store.session.userId;
     final RoomType roomType = store.session.currentRoomType;
     String userReference = 'available_rooms/';
 
     if (roomType == RoomType.private) userReference = 'chat_rooms/';
     userReference += '$roomId/active_users/$userId';
+    return userReference;
+  }
 
-    await _firebaseDatabase.ref(userReference).remove();
+  static Future<void> connectUserToCurrentChat() async {
+    final String? userReference = _getUserReference();
+    if (userReference != null) {
+      await _firebaseDatabase.ref(userReference).update({
+        'status': 'connected',
+      });
+    }
+  }
+
+  static Future<void> disconnectUserFromChat() async {
+    final String? userReference = _getUserReference();
+    if (userReference != null) {
+      await _firebaseDatabase.ref(userReference).remove();
+    }
   }
 }

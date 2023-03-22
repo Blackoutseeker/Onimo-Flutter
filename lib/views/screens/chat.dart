@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 import './rooms.dart';
+import '../widgets/chat/users_label.dart';
 import '../widgets/chat/list.dart';
 import '../widgets/chat/footer.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key, required this.roomName});
+  const ChatScreen({
+    super.key,
+    required this.roomName,
+    required this.initialUsersLength,
+  });
 
   final String roomName;
-
-  final int _activeUsers = 3;
-  final int _maxUsersAllowed = 5;
+  final int initialUsersLength;
 
   Future<bool> _navigateToPreviousScreen(BuildContext context) async {
     await Navigator.of(context).pushReplacement(
@@ -42,26 +45,7 @@ class ChatScreen extends StatelessWidget {
                 ),
               ),
               actions: [
-                SizedBox(
-                  width: 90,
-                  child: Row(
-                    children: [
-                      Text(
-                        '$_activeUsers/$_maxUsersAllowed',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      const Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                    ],
-                  ),
-                ),
+                ActiveUsersLabel(initialUsersLength: initialUsersLength),
               ],
             ),
             body: Column(

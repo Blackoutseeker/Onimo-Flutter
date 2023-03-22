@@ -27,6 +27,15 @@ class RoomCard extends StatelessWidget {
     );
   }
 
+  Future<void>? _handleOnNavigate(BuildContext context) async {
+    if (room.activeUsers.length == 5) return;
+    await _navigateToChatRoom(
+      context,
+      room.id,
+      room.name,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -40,11 +49,7 @@ class RoomCard extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        onTap: () async => await _navigateToChatRoom(
-          context,
-          room.id,
-          room.name,
-        ),
+        onTap: () async => await _handleOnNavigate(context),
         title: Text(
           room.name,
           style: const TextStyle(

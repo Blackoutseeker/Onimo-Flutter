@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:onimo/controllers/services/database.dart';
 import './rooms.dart';
 import '../widgets/chat/users_label.dart';
 import '../widgets/chat/list.dart';
@@ -16,6 +17,8 @@ class ChatScreen extends StatelessWidget {
   final int initialUsersLength;
 
   Future<bool> _navigateToPreviousScreen(BuildContext context) async {
+    Database.disconnectUserFromChat();
+
     await Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => RoomsScreen(),

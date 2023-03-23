@@ -19,10 +19,11 @@ class ChatScreen extends StatelessWidget {
   Future<bool> _navigateToPreviousScreen(BuildContext context) async {
     Database.disconnectUserFromChat();
 
-    await Navigator.of(context).pushReplacement(
+    await Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) => RoomsScreen(),
       ),
+      (route) => false,
     );
     return true;
   }

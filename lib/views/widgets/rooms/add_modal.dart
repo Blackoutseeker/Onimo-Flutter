@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:onimo/controllers/services/database.dart';
 import 'code_input.dart';
 
 class AddModal extends StatelessWidget {
   const AddModal({super.key});
+
+  void _addNewPublicRoom(BuildContext context) async {
+    await Database.insertPublicRoomIntoDatabase(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,11 @@ class AddModal extends StatelessWidget {
       children: [
         _renderTitle('Criar nova sala'),
         const SizedBox(height: 20),
-        _renderButton(() async => {}, 'Pública', Icons.public),
+        _renderButton(
+          () => _addNewPublicRoom(context),
+          'Pública',
+          Icons.public,
+        ),
         const SizedBox(height: 10),
         _renderButton(() async => {}, 'Privada', Icons.lock),
         const SizedBox(height: 10),

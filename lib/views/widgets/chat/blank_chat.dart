@@ -20,7 +20,7 @@ class BlankChat extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(14),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
+                  'Sempre mantenha o respeito aos demais usuários. Antes de enviar uma mensagem, pense em suas consequências.',
                   style: TextStyle(
                     color: Color(0xFF999999),
                     fontSize: 16,

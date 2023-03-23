@@ -18,7 +18,6 @@ class Footer extends StatefulWidget {
 class _FooterState extends State<Footer> {
   final TextEditingController _textFieldController = TextEditingController();
   final SessionStore _store = GetIt.I.get<SessionStore>();
-  final bool _enabled = true;
   String _counter = '0';
 
   void _setCounter(String text) {
@@ -69,7 +68,6 @@ class _FooterState extends State<Footer> {
           Expanded(
             child: TextField(
               controller: _textFieldController,
-              enabled: _enabled,
               onChanged: _setCounter,
               maxLength: _maxMessageLength,
               minLines: 1,
@@ -79,27 +77,27 @@ class _FooterState extends State<Footer> {
                 color: Colors.white,
                 fontSize: 16,
               ),
-              decoration: InputDecoration(
-                filled: _enabled,
-                fillColor: const Color(0xFF1E1E1E),
+              decoration: const InputDecoration(
+                filled: true,
+                fillColor: Color(0xFF1E1E1E),
                 counterText: '',
-                contentPadding: const EdgeInsets.symmetric(
+                contentPadding: EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 12,
                 ),
-                enabledBorder: const OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(24)),
                   borderSide: BorderSide(
                     color: Colors.transparent,
                   ),
                 ),
-                focusedBorder: const OutlineInputBorder(
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(24)),
                   borderSide: BorderSide(
                     color: Colors.transparent,
                   ),
                 ),
-                disabledBorder: const OutlineInputBorder(
+                disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(24)),
                   borderSide: BorderSide(
                     color: Color(0xFF1E1E1E),
@@ -107,7 +105,7 @@ class _FooterState extends State<Footer> {
                   ),
                 ),
                 hintText: 'Mensagem',
-                hintStyle: const TextStyle(
+                hintStyle: TextStyle(
                   color: Color(0xFF999999),
                 ),
               ),

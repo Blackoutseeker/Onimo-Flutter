@@ -19,7 +19,7 @@ class Room {
   final String name;
   final List<ActiveUser> activeUsers;
 
-  Map<dynamic, dynamic> convertToDatabase() {
+  Map<dynamic, dynamic> toDatabase() {
     return {
       'id': id,
       'name': name,

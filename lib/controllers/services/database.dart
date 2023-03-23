@@ -110,4 +110,27 @@ class Database {
       _navigateToNewChatRoom(context, roomName);
     }
   }
+
+  static Future<void> insertPrivateRoomIntoDatabase(
+    BuildContext context,
+  ) async {
+    final String roomId = Utils.generateRandomId(length: 4).toUpperCase();
+    final SessionStore store = GetIt.I.get<SessionStore>();
+
+    await _firebaseDatabase.ref('chat_rooms/$roomId').update({
+      'active_users': {
+        store.session.userId: {
+          'status': 'connected',
+        },
+      },
+    });
+
+    if (context.mounted) {
+      store.updateCurrentSessionRoom(
+        roomId: roomId,
+        roomType: RoomType.private,
+      );
+      _navigateToNewChatRoom(context, roomId);
+    }
+  }
 }

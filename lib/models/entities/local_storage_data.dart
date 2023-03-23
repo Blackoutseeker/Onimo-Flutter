@@ -17,7 +17,7 @@ class LocalStorageData {
     };
   }
 
-  factory LocalStorageData.fromStorage(Map<dynamic, dynamic> data) {
+  factory LocalStorageData.asLocalStorageData(Map<dynamic, dynamic> data) {
     return LocalStorageData(
       userId: data['user_id'],
       userNickname: data['user_nickname'],

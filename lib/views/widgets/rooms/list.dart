@@ -33,7 +33,7 @@ class _RoomsListState extends State<RoomsList> {
           Map<String, dynamic>.from(event.snapshot.value as Map);
 
       roomsFromDatabase.forEach((key, room) {
-        rooms.add(Room.convertFromDatabase(room));
+        rooms.add(Room.asRoom(room));
       });
 
       rooms.sort(

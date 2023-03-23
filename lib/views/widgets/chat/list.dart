@@ -44,7 +44,7 @@ class _MessagesListState extends State<MessagesList> {
         final messageFromDatabase =
             Map<String, dynamic>.from(event.snapshot.value as Map);
 
-        messages.add(Message.convertFromDatabase(messageFromDatabase));
+        messages.add(Message.asMessage(messageFromDatabase));
         messages.sort((a, b) => b.sendTimestamp.compareTo(a.sendTimestamp));
 
         _setMessagesState(messages);

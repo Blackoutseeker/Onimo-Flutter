@@ -33,7 +33,7 @@ class Room {
     };
   }
 
-  factory Room.convertFromDatabase(Map<dynamic, dynamic> data) {
+  factory Room.asRoom(Map<dynamic, dynamic> data) {
     final List<ActiveUser> activeUsers = [];
 
     if (data['active_users'] != null) {
@@ -48,8 +48,8 @@ class Room {
     }
 
     return Room(
-      id: data['id'],
-      name: data['name'],
+      id: data['id'] ?? '',
+      name: data['name'] ?? '',
       activeUsers: activeUsers,
     );
   }

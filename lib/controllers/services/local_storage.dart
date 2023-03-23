@@ -24,7 +24,8 @@ class LocalStorage {
     final dynamic lastSession = sessionBox.get(_sessionBoxKey);
 
     if (lastSession != null) {
-      final LocalStorageData localStorageData = LocalStorageData.fromStorage(
+      final LocalStorageData localStorageData =
+          LocalStorageData.asLocalStorageData(
         lastSession,
       );
       return Session(

@@ -15,7 +15,7 @@ class Database {
       String roomId, Message message) async {
     await _firebaseDatabase
         .ref('chat_rooms/$roomId/chat/${message.sendTimestamp}')
-        .set(message.convertToDatabase());
+        .set(message.toDatabase());
   }
 
   static String? _getUserReference() {

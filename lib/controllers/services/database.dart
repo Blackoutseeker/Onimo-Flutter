@@ -133,4 +133,11 @@ class Database {
       _navigateToNewChatRoom(context, roomId);
     }
   }
+
+  static Future<bool> checkIfPrivateRoomExists(String roomId) async {
+    final DataSnapshot privateRoom =
+        await _firebaseDatabase.ref('chat_rooms/$roomId').get();
+    if (privateRoom.exists) return true;
+    return false;
+  }
 }

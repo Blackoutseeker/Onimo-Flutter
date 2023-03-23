@@ -10,6 +10,10 @@ class AddModal extends StatelessWidget {
     await Database.insertPublicRoomIntoDatabase(context);
   }
 
+  void _createNewPrivateRoom(BuildContext context) async {
+    await Database.insertPrivateRoomIntoDatabase(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -26,7 +30,11 @@ class AddModal extends StatelessWidget {
           Icons.public,
         ),
         const SizedBox(height: 10),
-        _renderButton(() async => {}, 'Privada', Icons.lock),
+        _renderButton(
+          () => _createNewPrivateRoom(context),
+          'Privada',
+          Icons.lock,
+        ),
         const SizedBox(height: 10),
         const Divider(color: Color(0xFF999999)),
         const SizedBox(height: 10),

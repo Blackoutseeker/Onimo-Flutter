@@ -25,10 +25,7 @@ class _ActiveUsersLabelState extends State<ActiveUsersLabel> {
   final SessionStore _store = GetIt.I.get<SessionStore>();
   String? get _roomId => _store.session.currentRoomId;
   RoomType get _roomType => _store.session.currentRoomType;
-  int get _maxLengthAllowedUsers {
-    if (_roomType == RoomType.private) return 10;
-    return 5;
-  }
+  int get _maxLengthAllowedUsers => _store.session.maxUsersLength;
 
   int _activeUsersLength = 1;
   late StreamSubscription _usersSubscription;

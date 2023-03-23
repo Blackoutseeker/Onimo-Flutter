@@ -6,7 +6,7 @@ import 'code_input.dart';
 class AddModal extends StatelessWidget {
   const AddModal({super.key});
 
-  void _addNewPublicRoom(BuildContext context) async {
+  void _createNewPublicRoom(BuildContext context) async {
     await Database.insertPublicRoomIntoDatabase(context);
   }
 
@@ -21,7 +21,7 @@ class AddModal extends StatelessWidget {
         _renderTitle('Criar nova sala'),
         const SizedBox(height: 20),
         _renderButton(
-          () => _addNewPublicRoom(context),
+          () => _createNewPublicRoom(context),
           'Pública',
           Icons.public,
         ),

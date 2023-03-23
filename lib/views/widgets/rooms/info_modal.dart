@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-final List<String> _textList = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id eleifend neque, nec laoreet risus.',
-  'The quick brown fox jumps over the lazy dog.'
-];
+import 'package:onimo/utils/constants.dart';
 
 class InfoModal extends StatelessWidget {
   const InfoModal({super.key});
@@ -16,12 +13,12 @@ class InfoModal extends StatelessWidget {
       children: [
         _renderTitle('Regras'),
         const SizedBox(height: 20),
-        ..._renderTextList(_textList),
+        ..._renderTextList(Constants.rules),
         const Divider(color: Color(0xFF999999)),
         const SizedBox(height: 10),
         _renderTitle('Informações'),
         const SizedBox(height: 20),
-        ..._renderTextList(_textList.reversed.toList()),
+        ..._renderTextList(Constants.information),
       ],
     );
   }

@@ -29,16 +29,19 @@ class _RoomsListState extends State<RoomsList> {
     _roomsSubscription =
         _firebaseDatabase.ref('available_rooms').onValue.listen((event) {
       final List<Room> rooms = [];
-      final roomsFromDatabase =
-          Map<String, dynamic>.from(event.snapshot.value as Map);
 
-      roomsFromDatabase.forEach((key, room) {
-        rooms.add(Room.asRoom(room));
-      });
+      if (event.snapshot.exists) {
+        final roomsFromDatabase =
+            Map<String, dynamic>.from(event.snapshot.value as Map);
 
-      rooms.sort(
-        (a, b) => a.activeUsers.length.compareTo(b.activeUsers.length),
-      );
+        roomsFromDatabase.forEach((key, room) {
+          rooms.add(Room.asRoom(room));
+        });
+
+        rooms.sort(
+          (a, b) => a.activeUsers.length.compareTo(b.activeUsers.length),
+        );
+      }
 
       _setRoomsState(rooms);
     });

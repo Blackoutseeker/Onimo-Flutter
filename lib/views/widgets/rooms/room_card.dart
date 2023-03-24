@@ -22,7 +22,7 @@ class RoomCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => ChatScreen(
           roomName: roomName,
-          initialUsersLength: room.activeUsers.length,
+          initialUsersLength: room.activeUsers.length + 1,
         ),
       ),
     );

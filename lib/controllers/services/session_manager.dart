@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 
@@ -22,6 +23,10 @@ class SessionManager {
 
     return true;
   }
+
+  @visibleForTesting
+  static bool Function(Session?) get checkIfLastSessionIsOutdated =>
+      _checkIfLastSessionIsOutdated;
 
   static Future<void> _createNewSession() async {
     final String newUserId = Utils.generateRandomId();

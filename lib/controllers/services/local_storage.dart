@@ -8,7 +8,11 @@ const String _sessionBoxKey = 'session';
 
 class LocalStorage {
   static Future<void> saveCurrentSession(Session session) async {
-    final Box<dynamic> sessionBox = await Hive.openBox(_sessionBox);
+    if (!Hive.isBoxOpen(_sessionBox)) {
+      await Hive.openBox(_sessionBox);
+    }
+
+    final Box<dynamic> sessionBox = Hive.box(_sessionBox);
 
     final LocalStorageData localStorageData = LocalStorageData(
       userId: session.userId,
@@ -20,7 +24,11 @@ class LocalStorage {
   }
 
   static Future<Session?> getLastSession() async {
-    final Box<dynamic> sessionBox = await Hive.openBox(_sessionBox);
+    if (!Hive.isBoxOpen(_sessionBox)) {
+      await Hive.openBox(_sessionBox);
+    }
+
+    final Box<dynamic> sessionBox = Hive.box(_sessionBox);
     final dynamic lastSession = sessionBox.get(_sessionBoxKey);
 
     if (lastSession != null) {

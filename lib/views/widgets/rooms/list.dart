@@ -68,11 +68,15 @@ class _RoomsListState extends State<RoomsList> {
     if (_rooms.isEmpty) {
       return const Center(
         heightFactor: 8,
-        child: Text(
-          'Nenhuma sala disponível.',
-          style: TextStyle(
-            color: Color(0xFF999999),
-            fontSize: 16,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 40),
+          child: Text(
+            'Nenhuma sala disponível. Sinta-se livre para criar uma nova.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xFF999999),
+              fontSize: 16,
+            ),
           ),
         ),
       );

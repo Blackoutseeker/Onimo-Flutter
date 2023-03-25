@@ -7,16 +7,14 @@ import 'package:onimo/utils/utils.dart';
 import '../stores/session.dart';
 
 class SessionManager {
-  static Future<bool> _checkIfLastSessionIsOutdated() async {
-    final Session? lastSession = await LocalStorage.getLastSession();
+  static bool _checkIfLastSessionIsOutdated(Session? lastSession) {
     if (lastSession == null) return true;
 
     final DateTime currentDate = DateTime.now();
     final DateTime lastSessionDate = DateTime.parse(
       lastSession.lastSessionDate,
     );
-    final bool isTheSameDay =
-        lastSessionDate.difference(currentDate).inDays == 0;
+    final bool isTheSameDay = currentDate.day == lastSessionDate.day;
 
     if (isTheSameDay) {
       return false;
@@ -42,12 +40,13 @@ class SessionManager {
   }
 
   static Future<void> initialize() async {
-    final bool isSessionOutdated = await _checkIfLastSessionIsOutdated();
+    Session? lastSession = await LocalStorage.getLastSession();
+    final bool isSessionOutdated = _checkIfLastSessionIsOutdated(lastSession);
     if (isSessionOutdated) {
       await _createNewSession();
     }
 
-    final Session? lastSession = await LocalStorage.getLastSession();
+    lastSession = await LocalStorage.getLastSession();
     final SessionStore sessionStore = GetIt.I.get<SessionStore>();
     if (lastSession != null) {
       sessionStore.setSession(lastSession);

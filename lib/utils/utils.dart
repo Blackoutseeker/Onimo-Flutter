@@ -19,7 +19,7 @@ class Utils {
   static String generateNickname() {
     String nickname = '';
 
-    final int randomUnit = Random().nextInt(10) + 1; // [1-9]
+    final int randomUnit = Random().nextInt(9) + 1; // [1-9]
     final int randomNicknameIndex = Random().nextInt(
       Constants.nicknames.length,
     );

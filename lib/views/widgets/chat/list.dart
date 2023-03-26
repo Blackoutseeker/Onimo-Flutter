@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:onimo/controllers/stores/session.dart';
 import 'package:onimo/models/entities/message.dart';
+import 'package:onimo/controllers/services/database.dart';
 import './blank_chat.dart';
 import './message_card.dart';
 
@@ -16,7 +17,8 @@ class MessagesList extends StatefulWidget {
   State<MessagesList> createState() => _MessagesListState();
 }
 
-class _MessagesListState extends State<MessagesList> {
+class _MessagesListState extends State<MessagesList>
+    with WidgetsBindingObserver {
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   final ScrollController _scrollController = ScrollController();
   final SessionStore _store = GetIt.I.get<SessionStore>();
@@ -69,13 +71,26 @@ class _MessagesListState extends State<MessagesList> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _initializeChatListener();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    final bool isInBackground = state != AppLifecycleState.resumed;
+    if (isInBackground) {
+      Database.disconnectUserFromChat();
+    } else {
+      Database.connectUserToCurrentChat();
+    }
   }
 
   @override
   void dispose() {
     _stopChatListener();
     _scrollController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
